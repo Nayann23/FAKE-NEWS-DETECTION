@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered News Verifier</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex justify-center items-center min-h-screen">
+
+<div class="bg-gray-800 border-2 border-gray-700 rounded-xl p-8 w-full max-w-5xl shadow-lg">
+    <h1 class="text-3xl font-semibold mb-2 text-center">AI-Powered News Verifier</h1>
+    <p class="text-center text-gray-400 mb-6">Check instantly whether news is real or fake using our AI model</p>
+
+    <form method="POST" class="flex flex-col gap-4">
+
+        <!-- Author & Title hidden initially -->
+        <div id="author-title-fields" class="hidden flex flex-col gap-4">
+            <div class="flex flex-col">
+                <label for="author" class="mb-1 text-gray-300 font-semibold">Author</label>
+                <input type="text" id="author" name="author" placeholder="Author" 
+                       class="p-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="flex flex-col">
+                <label for="title" class="mb-1 text-gray-300 font-semibold">Title</label>
+                <input type="text" id="title" name="title" placeholder="Title" 
+                       class="p-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500">
+            </div>
+        </div>
+
+        <!-- Main news textarea -->
+        <div class="flex flex-col">
+            <label for="news-text" class="mb-1 text-gray-300 font-semibold">News Article</label>
+            <textarea id="news-text" name="text" placeholder="Enter news text here..." rows="6"
+                      class="p-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500">{{ text_val }}</textarea>
+        </div>
+
+        <div class="flex gap-4 mt-2 flex-wrap">
+            <button type="submit" name="check-news" class="flex-1 bg-blue-600 hover:bg-blue-700 rounded-lg py-2 font-semibold transition duration-300">
+                Verify Authenticity
+            </button>
+            <button type="button" id="generate-sample" class="flex-1 bg-gray-600 hover:bg-gray-700 rounded-lg py-2 font-semibold transition duration-300">
+                Generate Sample News
+            </button>
+            <button type="button" id="generate-sample-input" class="flex-1 bg-purple-600 hover:bg-purple-700 rounded-lg py-2 font-semibold transition duration-300">
+                Generate Sample Inputs
+            </button>
+            <button type="submit" name="clear" class="flex-1 bg-red-600 hover:bg-red-700 rounded-lg py-2 font-semibold transition duration-300">
+                Clear Input
+            </button>
+        </div>
+
+    </form>
+
+    {% if prediction %}
+    <div class="mt-6 p-4 text-center border border-gray-600 rounded-lg 
+                {% if 'Fake' in prediction %}bg-red-600{% else %}bg-green-600{% endif %}">
+        <span class="text-xl font-bold">{{ prediction }}</span>
+    </div>
+    {% endif %}
+</div>
+
+<script src="{{ url_for('static', filename='js/typewriter.js') }}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const textarea = document.getElementById('news-text');
+    const authorField = document.getElementById('author');
+    const titleField = document.getElementById('title');
+    const authorTitleDiv = document.getElementById('author-title-fields');
+
+    function getRandomDelay(min = 1000, max = 3000) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // STREAMING: Word-by-word with shimmer
+    document.getElementById('generate-sample').addEventListener('click', () => {
+        fetch('/sample')
+            .then(res => res.json())
+            .then(data => {
+                const parts = data.text.split('|||');
+                const author = parts[0] || '';
+                const title = parts[1] || '';
+                const text = parts[2] || '';
+
+                // Show author/title fields
+                authorTitleDiv.classList.remove('hidden');
+                authorField.value = author;
+                titleField.value = title;
+
+                // Shimmer/loading effect
+                textarea.value = "Fetching news samples... ⏳";
+                let shimmerInterval = setInterval(() => {
+                    textarea.value = textarea.value.endsWith('⏳') ? 
+                                     "Fetching news samples..." : 
+                                     "Fetching news samples... ⏳";
+                }, 500);
+
+                // Random delay before streaming
+                setTimeout(() => {
+                    clearInterval(shimmerInterval);
+                    textarea.value = ''; // Clear shimmer
+                    typeWriterWords(text, textarea, 10); // Start word-by-word streaming
+                }, getRandomDelay());
+            });
+    });
+
+    // INSTANT FILL
+    document.getElementById('generate-sample-input').addEventListener('click', () => {
+        fetch('/sample')
+            .then(res => res.json())
+            .then(data => {
+                const parts = data.text.split('|||');
+                const author = parts[0] || '';
+                const title = parts[1] || '';
+                const text = parts[2] || '';
+
+                authorTitleDiv.classList.remove('hidden');
+                authorField.value = author;
+                titleField.value = title;
+
+                textarea.value = text; // Instant paste
+            });
+    });
+});
+</script>
+
+
+</body>
+</html>
