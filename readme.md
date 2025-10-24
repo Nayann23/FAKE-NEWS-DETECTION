@@ -1,12 +1,12 @@
 # Fake News Detection
 
-This project is a **web-based tool** designed to help users determine whether a news article is real or fake. Using a trained machine learning model, it provides an easy and interactive way to check the authenticity of news content.
+This project is a **web-based tool** designed to help users determine whether a news article is real or fake. 
+Using a trained machine learning model, it provides an easy and interactive way to check the authenticity of news content.
 
 ---
 
-**Note:** The CSV dataset is not included in this repository due to its size; a direct source link is provided instead.
-
-Dataset Source: https://www.kaggle.com/code/simtoor/fake-news-detection/input
+## **Note:** The CSV dataset is not included in this repository due to its size; a direct source link is provided instead.
+- Dataset Source: https://www.kaggle.com/code/simtoor/fake-news-detection/input
 
 ---
 
