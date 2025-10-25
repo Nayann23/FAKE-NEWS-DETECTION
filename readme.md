@@ -73,3 +73,30 @@ This project provides a simple and interactive tool to help users **evaluate new
 ## Output
 ![UI Screenshot 1](UI.png)  
 ![UI Screenshot 2](UI2.png)
+
+
+---
+
+
+## 📜 License
+
+This project is open-source and licensed under the [MIT License](LICENSE). See the LICENSE file for full details.
+
+---
+
+## 👤 Author:  **Nayan Darokar** 
+
+## GitHub
+```bash
+https://github.com/Nayann23
+```
+
+## Email:
+```bash
+reachout.nayan@gmail.com  
+```
+## Portfolio: 
+```bash
+https://nayan-datascience-portfolio.vercel.app/
+```
+
