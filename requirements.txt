@@ -1,21 +1,10 @@
-# Web Framework
 Flask==2.3.3
-
-# Machine Learning and Data Handling
 numpy==1.26.4
 pandas==2.2.2
 scikit-learn==1.5.2
-
-# Natural Language Processing
 nltk==3.9.1
-
-# For Model Serialization (if you're saving/loading models)
 joblib==1.4.2
-
-# For Deployment (WSGI server)
 gunicorn==21.2.0
-
-# Optional but useful utilities
 itsdangerous==2.2.0
 Jinja2==3.1.4
 Werkzeug==3.1.3
