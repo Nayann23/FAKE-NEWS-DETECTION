@@ -72,7 +72,6 @@ This project provides a simple and interactive tool to help users **evaluate new
 
 ## Output
 ![UI Screenshot 1](UI.png)  
-![UI Screenshot 2](UI2.png)
 
 
 ---
