@@ -96,6 +96,6 @@ reachout.nayan@gmail.com
 ```
 ## Portfolio: 
 ```bash
-https://nayan-datascience-portfolio.vercel.app/
+https://nayan-portfolio-nine.vercel.app/
 ```
 
